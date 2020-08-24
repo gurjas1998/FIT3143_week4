@@ -37,7 +37,7 @@ int main() {
         printf("display %d: %d\n", i+1, pDisplay[i]);    
     }
     
-    //#pragma omp parallel for reduction(+:sum) num_threads(4) schedule(static, 2) 
+    //#pragma omp parallel for reduction(+:sum_wins) num_threads(4) schedule(static, 2) 
     //not sure if this is correct syntax but this is what we'd do for the discussion question, if counting no. of wins was also done in parallel
     for(i = 0; i < number_size; i++) {
         //printf("number %d: %d times\n", i, pNumber[i]);
