@@ -5,7 +5,7 @@
 
 
 int main() {
-    int i;
+    int i; //i initialised as int here so we don't have to 'int i' for every for loop (as an example)
     int val;
     int sum_wins = 0;
     int display_size = 10;
@@ -13,7 +13,7 @@ int main() {
     int* pDisplay = (int*)malloc(display_size * sizeof(int));
     int* pNumber =  (int*)malloc(number_size * sizeof(int));
     
-    srand(time(NULL));
+    srand(time(NULL)); //if this isn't called before using rand() then the random numbers that are generated won't be random - will be seen if the code is run multiple times
     
     //can run a pragma here as well where we initialise all array elements to 0 
     for(i = 0; i < number_size; i++) {
@@ -27,7 +27,7 @@ int main() {
         val = rand() % 25 + 1; // this will generate a random number from 0 to 24 and then add 1 to get (1, 25)
         pDisplay[i] = val;
         pNumber[val] += 1;
-        //printf("display %d: %d\n", i+1, pDisplay[i]); //this will print these statements out of order because it's being run in the parallel loop
+        //printf("display %d: %d\n", i+1, pDisplay[i]); //this will print these statements "out of display order" because it's being run in the parallel loop
         
     }
     
@@ -35,6 +35,8 @@ int main() {
         printf("display %d: %d\n", i+1, pDisplay[i]);    
     }
     
+    //#pragma omp parallel for reduction(+:sum) num_threads(4) schedule(static, 2) 
+    //not sure if this is correct syntax but this is what we'd do for the discussion question, if counting no. of wins was also done in parallel
     for(i = 0; i < number_size; i++) {
         //printf("number %d: %d times\n", i, pNumber[i]);
         if(pNumber[i] > 1) {
@@ -45,7 +47,7 @@ int main() {
     
     printf("number of wins: %d\n", sum_wins);
     
-    free(pDisplay);
+    free(pDisplay); //frees up the memory allocated to the arrays initialised
     free(pNumber);
     
     return 0;
